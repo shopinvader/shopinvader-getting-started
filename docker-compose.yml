@@ -9,7 +9,7 @@ services:
     env_file: environment
     links:
       - db_mongo
-    image: quay.io/akretion/shopinvader:section
+    image: quay.io/akretion/shopinvader:master
     volumes:
       - ./data/loco/log:/usr/src/app/log
       - ./data/loco/tmp:/usr/src/app/tmp
@@ -18,6 +18,5 @@ services:
     links:
       - locomotive
     volumes:
-    - template:/workspace
-
+    - ./template:/workspace
 version: '3'
