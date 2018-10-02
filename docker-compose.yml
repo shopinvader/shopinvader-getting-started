@@ -1,23 +1,23 @@
 services:
-  db:
+  db_mongo:
     image: mongo:3
     volumes:
-      - ./data/db:/data/db
-      - ./data/backup:/backup
+      - ./data/mongo/db:/data/db
+      - ./data/mongo/db/backup:/backup
   locomotive:
-    env_file: env_demo
-    environment:
-      - VIRTUAL_HOST=shopinvader-server.vd
-      - VIRTUAL_PORT=3000
-    image: quay.io/akretion/docky-ruby:latest
+    image: quay.io/akretion/locomotive:master
+    env_file: environment
     links:
-      - db
+      - db_mongo
+    image: quay.io/akretion/shopinvader:section
     volumes:
-       - ./shopinvader:/workspace
-       - ../gems:/workspace/dev-gem
-       - $HOME/.docky/shared/bundle:/usr/local/bundle
-       - ./data/tmp:/workspace/tmp
-       - ./data/log:/workspace/log
-       - ./data/public/sites:/workspace/public/sites
-       - ./data/public/uploaded_assets:/workspace/public/uploaded_assets
+      - ./data/loco/log:/usr/src/app/log
+      - ./data/loco/tmp:/usr/src/app/tmp
+  wagon:
+    image: quay.io/akretion/shopinvader-wagon:latest
+    links:
+      - locomotive
+    volumes:
+    - template:/workspace
+
 version: '3'
