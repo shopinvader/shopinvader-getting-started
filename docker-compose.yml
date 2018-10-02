@@ -10,9 +10,8 @@ services:
     links:
       - db_mongo
     image: quay.io/akretion/shopinvader:master
-    volumes:
-      - ./data/loco/log:/usr/src/app/log
-      - ./data/loco/tmp:/usr/src/app/tmp
+    ports:
+      - 3000:3000
   wagon:
     image: quay.io/akretion/shopinvader-wagon:latest
     links:
