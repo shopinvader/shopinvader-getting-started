@@ -1,9 +1,6 @@
 services:
   db_mongo:
     image: mongo:3
-    volumes:
-      - ./data/mongo/db:/data/db
-      - ./data/mongo/db/backup:/backup
   locomotive:
     image: quay.io/akretion/locomotive:master
     env_file: environment
