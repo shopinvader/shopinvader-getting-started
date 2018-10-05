@@ -9,6 +9,8 @@ services:
     image: quay.io/akretion/shopinvader:master
     ports:
       - 3000:3000
+    volumes:
+      - usr_src_app:/usr/src/app
   wagon:
     image: quay.io/akretion/shopinvader-wagon:latest
     links:
@@ -25,12 +27,20 @@ services:
     - DB_HOST=db_postgresql
     - DB_USER=odoo
     - DB_PASSWORD=odoo
-    - DB_NAME=db
-    image: shopinvader-odoo
+    - DB_NAME=db,db2
+    - DB_FILTER=
+    - ADMIN_PASSWD=admin
+    - SERVER_WIDE_MODULES=web,web_kanban,queue_job
+    - ADDONS_PATH=/odoo/src/addons,/odoo/src/odoo/addons,/odoo/local-src,/odoo/external-src/ak-odoo-incubator,/odoo/external-src/connector-search-engine,/odoo/external-src/queue,/odoo/external-src/e-commerce,/odoo/external-src/product-variant,/odoo/external-src/odoo-shopinvader,/odoo/external-src/storage,/odoo/external-src/connector,/odoo/external-src/server-tools,/odoo/external-src/product-attribute,/odoo/external-src/base_rest
+    image: shopinvadoo
 #    image: quay.io/akretion/shopinvader-odoo:latest
     links:
     - db_postgresql
     - locomotive
     ports:
       - 8069:8069
+      - 8072:8072
+      - 8071:8071
 version: '3'
+volumes:
+  usr_src_app:
