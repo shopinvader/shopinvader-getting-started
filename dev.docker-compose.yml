@@ -6,7 +6,7 @@ services:
   mongodb:
     image: mongo:3
     volumes:
-      - ./db:/data/db
+      - .db:/data/db
   locomotive:
     image: quay.io/akretion/locomotive-shopinvader-demo:v3.4-latest
     environment:
