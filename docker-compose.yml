@@ -1,0 +1,56 @@
+services:
+  mongodb:
+    image: mongo:3
+    volumes:
+      - mongodb:/data/db
+  locomotive:
+    image: quay.io/akretion/locomotive-shopinvader-demo:v3.4-latest
+    environment:
+      - VIRTUAL_HOST=locomotive-shopinvader-demo.dy
+      - VIRTUAL_PORT=3000
+      - RAILS_ENV=development
+      - STORE_ASSET_IN_S3=false
+      - DRAGON_FLY_SECRET=thisISaDEMOkeyNOTsecret
+      - MONGODB_DEV_HOST=mongodb
+      - LOCOMOTIVE_ENABLE_REGISTRATION=true
+    volumes:
+      - usr_src_app_log:/usr/src/app/tmp
+      - usr_src_app_tmp:/usr/src/app/log
+      - usr_src_app_public_sites:/usr/src/app/public/sites
+      - usr_src_app_public_uploaded:/usr/src/app/public/uploaded_assets
+    depends_on:
+      - mongodb
+    ports:
+      - 3000:3000
+  pgdb:
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_DB=db
+    image: quay.io/akretion/postgresql:10
+    volumes:
+      - pgdb:/var/lib/postgresql/data
+  odoo:
+    image: quay.io/akretion/shopinvader-odoo:10.0-latest
+    environment:
+      - PYTHONDONTWRITEBYTECODE=True
+      - DB_USER=odoo
+      - DB_PASS=odoo
+      - DB_NAME=db
+      - DB_HOST=pgdb
+      - RUNNING_ENV=dev
+      - MARABUNTA_MODE=demo
+      - DEMO=True
+      - SERVER_WIDE_MODULES=web,web_kanban,queue_job
+    depends_on:
+      - pgdb
+      - locomotive
+    ports:
+      - 8069:8069
+version: '3'
+volumes:
+  usr_src_app_log:
+  usr_src_app_tmp:
+  usr_src_app_public_sites:
+  usr_src_app_public_uploaded:
+  mongodb:
+  pgdb:
