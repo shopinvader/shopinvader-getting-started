@@ -31,6 +31,8 @@ services:
       - pgdb:/var/lib/postgresql/data
   odoo:
     image: quay.io/akretion/shopinvader-odoo:10.0-latest
+    volumes:
+      - data-odoo:/data/odoo
     environment:
       - PYTHONDONTWRITEBYTECODE=True
       - DB_USER=odoo
@@ -56,6 +58,7 @@ services:
     entrypoint: /usr/local/bin/entrypoint gosu ubuntu bash
 version: '3'
 volumes:
+  data-odoo:
   usr_src_app_log:
   usr_src_app_tmp:
   usr_src_app_public_sites:
