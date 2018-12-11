@@ -41,6 +41,7 @@ services:
       - MARABUNTA_MODE=demo
       - DEMO=True
       - SERVER_WIDE_MODULES=web,web_kanban,queue_job
+      - ODOO_QUEUE_JOB_CHANNELS=root:4,root.search_engine:4,root.search_engine.recompute_json:4,root.search_engine.prepare_batch_export:4
     depends_on:
       - pgdb
       - locomotive
