@@ -47,6 +47,13 @@ services:
       - locomotive
     ports:
       - 8069:8069
+  wagon:
+    image: quay.io/akretion/shopinvader-wagon:latest
+    ports:
+      - 3333:3333
+    volumes:
+      - ./template:/workspace
+    entrypoint: /usr/local/bin/entrypoint gosu ubuntu bash
 version: '3'
 volumes:
   usr_src_app_log:
