@@ -19,7 +19,7 @@ git clone https://github.com/akretion/shopinvader-template template
 Then run wagon
 
 ```
-docker-compose run wagon --service-port
+docker-compose run --service-port wagon
 ```
 
 Then inside you can play with wagon
