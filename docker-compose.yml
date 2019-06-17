@@ -20,6 +20,7 @@ services:
       - usr_src_app_public_uploaded:/usr/src/app/public/uploaded_assets
     depends_on:
       - mongodb
+      - elastic
     ports:
       - 3000:3000
   pgdb:
@@ -29,6 +30,14 @@ services:
     image: quay.io/akretion/postgresql:10
     volumes:
       - pgdb:/var/lib/postgresql/data
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
   odoo:
     image: quay.io/akretion/shopinvader-odoo:10.0-latest
     volumes:
@@ -47,6 +56,7 @@ services:
     depends_on:
       - pgdb
       - locomotive
+      - elastic
     ports:
       - 8069:8069
   wagon:
@@ -65,3 +75,4 @@ volumes:
   usr_src_app_public_uploaded:
   mongodb:
   pgdb:
+  esdata:
