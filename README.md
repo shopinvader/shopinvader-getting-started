@@ -1,49 +1,27 @@
-# Shopinvader getting
+# Shopinvader getting started
+
+Get a local demo of Shopinvader in a minimum of steps.
+
+## Requirements
+
+docker-compose https://docs.docker.com/compose/install/
+git (optional, you can manually download https://raw.githubusercontent.com/akretion/shopinvader-getting-started/master/docker-compose.yml)
 
 
-## With docker-compose
+## Run
 
-This cmd will run locomotive + odoo in background
 
-```
+```bash
+git clone https://github.com/akretion/shopinvader-getting-started
+cd shopinvader-getting-started
 docker-compose up -d
-```
-
-
-This cmd (should be run after the first one) will start wagon and allow you to deploy a new website
-
-```
 git clone https://github.com/akretion/shopinvader-template template
-```
-
-Then run wagon
-
-```
 docker-compose run --service-port wagon
 ```
 
-Then inside you can play with wagon
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-For akretion started for akretion
-
-You just need to clone the project and launch `docky up`
-
-Your locomotive is available at : http://locomotive-shopinvader-demo.dy
 
 Login/password are here : https://github.com/akretion/docker-locomotive-shopinvader-demo/blob/v3.4/README.md
