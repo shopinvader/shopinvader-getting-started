@@ -4,7 +4,7 @@ services:
     volumes:
       - mongodb:/data/db
   locomotive:
-    image: quay.io/akretion/locomotive-shopinvader-demo:v3.4-latest
+    image: quay.io/akretion/locomotive-shopinvader-demo:v4.0.x-latest
     environment:
       - VIRTUAL_HOST=locomotive-shopinvader-demo.dy
       - VIRTUAL_PORT=3000
@@ -12,6 +12,7 @@ services:
       - STORE_ASSET_IN_S3=false
       - DRAGON_FLY_SECRET=thisISaDEMOkeyNOTsecret
       - MONGODB_DEV_HOST=mongodb
+      - LOCOMOTIVE_ADMIN_SSL_REDIRECT=false
       - LOCOMOTIVE_ENABLE_REGISTRATION=true
     volumes:
       - usr_src_app_log:/usr/src/app/tmp
