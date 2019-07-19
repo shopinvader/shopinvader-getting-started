@@ -28,11 +28,14 @@ Access Odoo from http://localhost:8069
 Login: odoo
 Password: odoo
 
-Demo data are already loaded.
-
-Odoo is an ERP system. It's the backend of shopinvader, where you manage products, handle sale orders, manage shipping and accounting.
+Odoo is an ERP system. It's the backend of shopinvader, where you manage products, handle sale orders, manage shipping and do the invoicing / accounting.
 
 ## LocomotiveCMS
 
+E-commerce website: https://localhost:3000
+It's the front page of the store.
 
-Login/password are here : https://github.com/akretion/docker-locomotive-shopinvader-demo/blob/v3.4/README.md
+CMS Admin panel http://localhost:3000/locomotive
+Login: demo@shopinvader.com
+Password: akretion
+The CMS Admin panel is used to create marketing content like a blog.
