@@ -1,49 +1,41 @@
-# Shopinvader getting
+# Shopinvader getting started
+
+Get a local demo of Shopinvader in a minimum of steps.
+
+## Requirements
+
+docker-compose https://docs.docker.com/compose/install/
+git (optional, you can manually download https://raw.githubusercontent.com/akretion/shopinvader-getting-started/master/docker-compose.yml)
 
 
-## With docker-compose
+## Run
 
-This cmd will run locomotive + odoo in background
 
-```
+```bash
+git clone https://github.com/akretion/shopinvader-getting-started
+cd shopinvader-getting-started
 docker-compose up -d
-```
-
-
-This cmd (should be run after the first one) will start wagon and allow you to deploy a new website
-
-```
 git clone https://github.com/akretion/shopinvader-template template
-```
-
-Then run wagon
-
-```
 docker-compose run --service-port wagon
 ```
 
-Then inside you can play with wagon
+The following ports will be open on your host: 8069, 3000, 9200.
 
 
+## Odoo ERP
 
+Access Odoo from http://localhost:8069
+Login: odoo
+Password: odoo
 
+Odoo is an ERP system. It's the backend of shopinvader, where you manage products, handle sale orders, manage shipping and do the invoicing / accounting.
 
+## LocomotiveCMS
 
+E-commerce website: https://localhost:3000
+It's the front page of the store.
 
-
-
-
-
-
-
-
-
-
-
-For akretion started for akretion
-
-You just need to clone the project and launch `docky up`
-
-Your locomotive is available at : http://locomotive-shopinvader-demo.dy
-
-Login/password are here : https://github.com/akretion/docker-locomotive-shopinvader-demo/blob/v3.4/README.md
+CMS Admin panel http://localhost:3000/locomotive
+Login: demo@shopinvader.com
+Password: akretion
+The CMS Admin panel is used to create marketing content like a blog.
