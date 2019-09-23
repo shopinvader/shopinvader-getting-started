@@ -6,7 +6,7 @@ Get a local demo of Shopinvader in a minimum of steps.
 
 docker-compose https://docs.docker.com/compose/install/
 
-git (optional, you can manually download https://raw.githubusercontent.com/akretion/shopinvader-getting-started/master/docker-compose.yml)
+git (optional, you can manually download https://raw.githubusercontent.com/shopinvader/shopinvader-getting-started/master/docker-compose.yml)
 
 
 ## Run
@@ -14,10 +14,10 @@ git (optional, you can manually download https://raw.githubusercontent.com/akret
 
 ```bash
 
-git clone https://github.com/akretion/shopinvader-getting-started
+git clone https://github.com/shopinvader/shopinvader-getting-started
 cd shopinvader-getting-started
 docker-compose up -d
-git clone https://github.com/akretion/shopinvader-template template
+git clone https://github.com/shopinvader/shopinvader-template template
 docker-compose run --service-port wagon
 
 ```
