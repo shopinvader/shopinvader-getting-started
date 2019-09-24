@@ -4,10 +4,8 @@ services:
     volumes:
       - mongodb:/data/db
   locomotive:
-    image: quay.io/akretion/locomotive-shopinvader-demo:v4.0.x-latest
+    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20190924-1709
     environment:
-      - VIRTUAL_HOST=locomotive-shopinvader-demo.dy
-      - VIRTUAL_PORT=3000
       - RAILS_ENV=development
       - STORE_ASSET_IN_S3=false
       - DRAGON_FLY_SECRET=thisISaDEMOkeyNOTsecret
@@ -24,13 +22,6 @@ services:
       - elastic
     ports:
       - 3000:3000
-  pgdb:
-    environment:
-      - POSTGRES_USER=odoo
-      - POSTGRES_DB=db
-    image: quay.io/akretion/postgresql:10
-    volumes:
-      - pgdb:/var/lib/postgresql/data
   elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
     environment:
@@ -39,29 +30,8 @@ services:
       - esdata:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
-  odoo:
-    image: quay.io/akretion/shopinvader-odoo:10.0-latest
-    volumes:
-      - data-odoo:/data/odoo
-    environment:
-      - PYTHONDONTWRITEBYTECODE=True
-      - DB_USER=odoo
-      - DB_PASS=odoo
-      - DB_NAME=db
-      - DB_HOST=pgdb
-      - RUNNING_ENV=dev
-      - MARABUNTA_MODE=demo
-      - DEMO=True
-      - SERVER_WIDE_MODULES=web,web_kanban,queue_job
-      - ODOO_QUEUE_JOB_CHANNELS=root:4,root.search_engine:4,root.search_engine.recompute_json:4,root.search_engine.prepare_batch_export:4
-    depends_on:
-      - pgdb
-      - locomotive
-      - elastic
-    ports:
-      - 8069:8069
   wagon:
-    image: quay.io/akretion/shopinvader-wagon:latest
+    image: quay.io/shopinvader/wagon:v4.0.x-20190919
     ports:
       - 3333:3333
     volumes:
@@ -69,11 +39,9 @@ services:
     entrypoint: /usr/local/bin/entrypoint gosu ubuntu bash
 version: '3'
 volumes:
-  data-odoo:
   usr_src_app_log:
   usr_src_app_tmp:
   usr_src_app_public_sites:
   usr_src_app_public_uploaded:
   mongodb:
-  pgdb:
   esdata:
