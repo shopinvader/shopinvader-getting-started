@@ -29,9 +29,9 @@ The following ports will be open on your host: 8069, 3000, 9200.
 
 Access Odoo from http://localhost:8069
 
-Login: odoo
+Login: admin
 
-Password: odoo
+Password: admin
 
 Odoo is an ERP system. It's the backend of shopinvader, where you manage products, handle sale orders, manage shipping and do the invoicing / accounting.
 
