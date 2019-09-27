@@ -4,7 +4,7 @@ services:
     volumes:
       - mongodb:/data/db
   locomotive:
-    image: quay.io/shopinvader/locomotive-shopinvader-demo:v4.0.x-latest
+    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20190924-1709
     environment:
       - VIRTUAL_HOST=locomotive-shopinvader-demo.dy
       - VIRTUAL_PORT=3000
@@ -63,7 +63,7 @@ services:
         [ir.config_parameter]
         report.url=http://odoo:8069
         web.base.url=http://odoo:8069
-        
+
         [api_key_test]
         user=admin
         key=123456
@@ -79,9 +79,9 @@ services:
   kwkhtmltopdf:
     image: acsone/kwkhtmltopdf
     ports:
-      - 8080:8080
+      - 9080:9080
   wagon:
-    image: quay.io/akretion/shopinvader-wagon:latest
+    image: quay.io/shopinvader/wagon:v4.0.x-20190919
     ports:
       - 3333:3333
     volumes:
