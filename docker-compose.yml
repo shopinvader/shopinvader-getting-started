@@ -4,7 +4,7 @@ services:
     volumes:
       - mongodb:/data/db
   locomotive:
-    image: quay.io/akretion/locomotive-shopinvader-demo:v4.0.x-latest
+    image: quay.io/shopinvader/locomotive-shopinvader-demo:v4.0.x-latest
     environment:
       - VIRTUAL_HOST=locomotive-shopinvader-demo.dy
       - VIRTUAL_PORT=3000
@@ -34,32 +34,52 @@ services:
   elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
     environment:
-      - discovery.type=single-node
+      discovery.type: single-node
+      http.cors.enabled: "true"
+      http.cors.allow-origin: "*"
     volumes:
       - esdata:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
   odoo:
-    image: quay.io/akretion/shopinvader-odoo:10.0-latest
+    build: ./containers/odoo
     volumes:
       - data-odoo:/data/odoo
     environment:
-      - PYTHONDONTWRITEBYTECODE=True
-      - DB_USER=odoo
-      - DB_PASS=odoo
-      - DB_NAME=db
-      - DB_HOST=pgdb
-      - RUNNING_ENV=dev
-      - MARABUNTA_MODE=demo
-      - DEMO=True
-      - SERVER_WIDE_MODULES=web,web_kanban,queue_job
-      - ODOO_QUEUE_JOB_CHANNELS=root:4,root.search_engine:4,root.search_engine.recompute_json:4,root.search_engine.prepare_batch_export:4
+      RUNNING_ENV: demo
+      DB_USER: odoo
+      DB_PASSWORD: odoo
+      DB_NAME: odoo-shopinvader-demo
+      DB_HOST: pgdb
+      SERVER_WIDE_MODULES: web,queue_job
+      ODOO_QUEUE_JOB_CHANNEL: =root:4,root.search_engine:4,root.search_engine.recompute_json:4,root.search_engine.prepare_batch_export:4
+      ADMIN_PASSWD: admin
+      UNACCENT: "true"
+      LIMIT_TIME_CPU: 900
+      LIMIT_TIME_REAL: 1800
+      MAX_CRON_THREADS: 1
+      LOG_LEVEL: info
+      ADDITIONAL_ODOO_RC: |-
+        [ir.config_parameter]
+        report.url=http://odoo:8069
+        web.base.url=http://odoo:8069
+        
+        [api_key_test]
+        user=admin
+        key=123456
+      KWKHTMLTOPDF_SERVER_URL: http://kwkhtmltopdf:8080
     depends_on:
       - pgdb
       - locomotive
       - elastic
+      - kwkhtmltopdf
     ports:
       - 8069:8069
+      - 8072:8072
+  kwkhtmltopdf:
+    image: acsone/kwkhtmltopdf
+    ports:
+      - 8080:8080
   wagon:
     image: quay.io/akretion/shopinvader-wagon:latest
     ports:
