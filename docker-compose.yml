@@ -4,10 +4,8 @@ services:
     volumes:
       - mongodb:/data/db
   locomotive:
-    image: quay.io/shopinvader/locomotive-shopinvader-demo:v4.0.x-latest
+    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20190929-1309
     environment:
-      - VIRTUAL_HOST=locomotive-shopinvader-demo.dy
-      - VIRTUAL_PORT=3000
       - RAILS_ENV=development
       - STORE_ASSET_IN_S3=false
       - DRAGON_FLY_SECRET=thisISaDEMOkeyNOTsecret
@@ -24,6 +22,10 @@ services:
       - elastic
     ports:
       - 3000:3000
+    networks:
+      default:
+        aliases:
+          - locomotive.localtest.me
   pgdb:
     environment:
       - POSTGRES_USER=odoo
@@ -41,6 +43,10 @@ services:
       - esdata:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+    networks:
+      default:
+        aliases:
+          - elastic.localtest.me
   odoo:
     build: ./containers/odoo
     volumes:
@@ -62,11 +68,7 @@ services:
       ADDITIONAL_ODOO_RC: |-
         [ir.config_parameter]
         report.url=http://odoo:8069
-        web.base.url=http://odoo:8069
-        
-        [api_key_test]
-        user=admin
-        key=123456
+        web.base.url=http://odoo.localtest.me:8069
       KWKHTMLTOPDF_SERVER_URL: http://kwkhtmltopdf:8080
     depends_on:
       - pgdb
@@ -76,12 +78,14 @@ services:
     ports:
       - 8069:8069
       - 8072:8072
+    networks:
+      default:
+        aliases:
+          - odoo.localtest.me
   kwkhtmltopdf:
     image: acsone/kwkhtmltopdf
-    ports:
-      - 8080:8080
   wagon:
-    image: quay.io/akretion/shopinvader-wagon:latest
+    image: quay.io/shopinvader/wagon:v4.0.x-20190919
     ports:
       - 3333:3333
     volumes:
