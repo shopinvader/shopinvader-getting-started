@@ -65,16 +65,6 @@ services:
         [ir.config_parameter]
         report.url=http://odoo:8069
         web.base.url=http://odoo.localtest.me:8069
-
-        [api_key_test]
-        user=admin
-        key=123456
-        [api_key_test_2]
-        user=admin
-        key=78910
-        [api_key_test_3]
-        user=admin
-        key=111213
       KWKHTMLTOPDF_SERVER_URL: http://kwkhtmltopdf:8080
     depends_on:
       - pgdb
