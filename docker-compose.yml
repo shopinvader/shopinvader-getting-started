@@ -4,7 +4,7 @@ services:
     volumes:
       - mongodb:/data/db
   locomotive:
-    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20190928-1609
+    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20190929-1309
     environment:
       - RAILS_ENV=development
       - STORE_ASSET_IN_S3=false
@@ -39,6 +39,10 @@ services:
       - esdata:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+    networks:
+      default:
+        aliases:
+          - elastic.localtest.me
   odoo:
     build: ./containers/odoo
     volumes:
@@ -60,7 +64,7 @@ services:
       ADDITIONAL_ODOO_RC: |-
         [ir.config_parameter]
         report.url=http://odoo:8069
-        web.base.url=http://odoo:8069
+        web.base.url=http://odoo.localtest.me:8069
 
         [api_key_test]
         user=admin
@@ -80,6 +84,10 @@ services:
     ports:
       - 8069:8069
       - 8072:8072
+    networks:
+      default:
+        aliases:
+          - odoo.localtest.me
   kwkhtmltopdf:
     image: acsone/kwkhtmltopdf
   wagon:
