@@ -4,7 +4,7 @@ services:
     volumes:
       - mongodb:/data/db
   locomotive:
-    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20190929-1309
+    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20190930-1409
     environment:
       - RAILS_ENV=development
       - STORE_ASSET_IN_S3=false
