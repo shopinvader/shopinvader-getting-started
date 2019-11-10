@@ -27,7 +27,7 @@ The following ports will be open on your host: 8069, 3000, 9200.
 
 ## Odoo ERP
 
-Access Odoo from http://odoo.localtest.me/:8069
+Access Odoo from http://odoo.localtest.me:8069
 
 Login: admin
 
