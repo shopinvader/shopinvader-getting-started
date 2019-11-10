@@ -27,7 +27,7 @@ The following ports will be open on your host: 8069, 3000, 9200.
 
 ## Odoo ERP
 
-Access Odoo from http://localhost:8069
+Access Odoo from http://odoo.localtest.me/:8069
 
 Login: admin
 
@@ -37,11 +37,11 @@ Odoo is an ERP system. It's the backend of shopinvader, where you manage product
 
 ## LocomotiveCMS
 
-E-commerce website: https://localhost:3000
+E-commerce website: https://locomotive.localtest.me:3000
 
 It's the front page of the store.
 
-CMS Admin panel http://localhost:3000/locomotive
+CMS Admin panel http://locomotive.localtest.me:3000/locomotive
 
 Login: demo@shopinvader.com
 
