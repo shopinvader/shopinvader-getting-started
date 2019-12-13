@@ -58,7 +58,25 @@ The CMS Admin panel is used to create marketing content like a blog.
 Preview changes in the theme with wagon:
 
 ```sh
-$ docker-compose wagon run
+$ docker-compose run wagon
 ubuntu@wagon $ bundle exec wagon serve 
 ```
 Access http://wagon.localhost
+
+Configure the environment in template/config/deploy.yml
+(copy paste info from http://locomotive.localhost/locomotive Developpers > Wagon
+
+```yaml
+dev:
+  host: http://locomotive.localhost
+  handle: demo
+  email: demo@shopinvader.com
+  api_key: 1234
+  ``` 
+
+Deploy:
+```sh
+$ docker-compose run wagon
+ubuntu@wagon $ bundle exec wagon deploy dev
+```
+(For the first deploy, push the data: `$ bundle exec wagon deploy dev -d` 
