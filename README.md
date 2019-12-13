@@ -80,3 +80,15 @@ $ docker-compose run wagon
 ubuntu@wagon $ bundle exec wagon deploy dev
 ```
 (For the first deploy, push the data: `$ bundle exec wagon deploy dev -d` 
+
+If you change the assets (javascript or css), you have to build then deploy:
+```sh
+$ cd shopinvader-template
+$ docker run  --rm -v `pwd`:/usr/src/app -w /usr/src/app -it node:latest bash
+root@node $ yarn
+root@node $ yarn build:dev
+root@node $ exit
+$ cd ..
+$ docker-compose run wagon
+ubuntu@wagon $ bundle exec wagon deploy dev
+```
