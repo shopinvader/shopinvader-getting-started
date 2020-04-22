@@ -19,7 +19,7 @@ cd shopinvader-getting-started
 docker-compose up -d
 git clone https://github.com/shopinvader/shopinvader-template template
 docker-compose run --service-port wagon
-
+wagon deploy test -d -v
 ```
 
 The following ports will be open on your host: 8069, 3000, 9200.
