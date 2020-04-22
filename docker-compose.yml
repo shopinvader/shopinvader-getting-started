@@ -20,12 +20,10 @@ services:
     depends_on:
       - mongodb
       - elastic
-    ports:
-      - 3000:3000
-    networks:
-      default:
-        aliases:
-          - locomotive.localtest.me
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=3000"
+      - "traefik.http.routers.locomotive.rule=Host(`locomotive.localhost`)"
   pgdb:
     environment:
       - POSTGRES_USER=odoo
@@ -41,12 +39,10 @@ services:
       http.cors.allow-origin: "*"
     volumes:
       - esdata:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-    networks:
-      default:
-        aliases:
-          - elastic.localtest.me
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=9200"
+      - "traefik.http.routers.elastic.rule=Host(`elastic.localhost`)"
   odoo:
     build: ./containers/odoo
     volumes:
@@ -68,29 +64,50 @@ services:
       ADDITIONAL_ODOO_RC: |-
         [ir.config_parameter]
         report.url=http://odoo:8069
-        web.base.url=http://odoo.localtest.me:8069
+        web.base.url=http://odoo.localhost
       KWKHTMLTOPDF_SERVER_URL: http://kwkhtmltopdf:8080
     depends_on:
       - pgdb
       - locomotive
       - elastic
       - kwkhtmltopdf
-    ports:
-      - 8069:8069
-      - 8072:8072
-    networks:
-      default:
-        aliases:
-          - odoo.localtest.me
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=8069"
+      - "traefik.http.routers.odoo.rule=Host(`odoo.localhost`)"
+      - "traefik.http.routers.odoo_long.rule=Host(`odoo.localhost`) && PathPrefix(`/longpolling/`)"
+      - "traefik.http.services.odoo_long.loadbalancer.server.port=8072"
   kwkhtmltopdf:
     image: acsone/kwkhtmltopdf
   wagon:
     image: quay.io/shopinvader/wagon:v4.0.x-20190919
-    ports:
-      - 3333:3333
     volumes:
       - ./template:/workspace
     entrypoint: /usr/local/bin/entrypoint gosu ubuntu bash
+    hostname: wagon
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wagon.rule=Host(`wagon.localhost`)"
+      - "traefik.http.services.wagon.loadbalancer.server.port=3333"
+  traefik:
+      image: traefik:v2.0
+      command: --providers.docker --providers.docker.exposedbydefault=false
+      ports:
+          # Please do not change the following port
+          # This demo have configured for running on the port 80
+          # changing the port will break the connexion between
+          # odoo - locomotive - elastic
+          - "127.0.0.1:80:80"
+      volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+      networks:
+        default:
+          aliases:
+            - odoo.localhost
+            - elastic.localhost
+            - locomotive.localhost
+            - wagon.localhost
+
 version: '3'
 volumes:
   data-odoo:
