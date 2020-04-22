@@ -93,7 +93,11 @@ services:
       image: traefik:v2.0
       command: --providers.docker --providers.docker.exposedbydefault=false
       ports:
-          - "80:80"
+          # Please do not change the following port
+          # This demo have configured for running on the port 80
+          # changing the port will break the connexion between
+          # odoo - locomotive - elastic
+          - "127.0.0.1:80:80"
       volumes:
           - /var/run/docker.sock:/var/run/docker.sock
       networks:
