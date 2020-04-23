@@ -4,7 +4,7 @@ services:
     volumes:
       - mongodb:/data/db
   locomotive:
-    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20190930-1409
+    image: quay.io/shopinvader/locomotive-shopinvader-demo:V4.0.x-20200423-1120
     environment:
       - RAILS_ENV=development
       - STORE_ASSET_IN_S3=false
@@ -24,6 +24,7 @@ services:
       - "traefik.enable=true"
       - "traefik.port=3000"
       - "traefik.http.routers.locomotive.rule=Host(`locomotive.localhost`)"
+      - "traefik.http.routers.front.rule=HostRegexp(`{subdomain:[A-Za-z0-9\\-]+}.front.localhost`)"
   pgdb:
     environment:
       - POSTGRES_USER=odoo
@@ -80,7 +81,7 @@ services:
   kwkhtmltopdf:
     image: acsone/kwkhtmltopdf
   wagon:
-    image: quay.io/shopinvader/wagon:v4.0.x-20190919
+    image: quay.io/shopinvader/wagon:v4.0.x-20200423
     volumes:
       - ./template:/workspace
     entrypoint: /usr/local/bin/entrypoint gosu ubuntu bash
