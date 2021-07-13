@@ -1,4 +1,4 @@
-FROM quay.io/acsone/odoo-bedrock:12.0-py35-latest
+FROM quay.io/acsone/odoo-bedrock:12.0-py36-latest
 
 RUN set -e \
   && apt update \
